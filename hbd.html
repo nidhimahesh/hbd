@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Race</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff;
+            margin: 0;
+            overflow: hidden;
+        }
+        #countdown, #message {
+            font-size: 3rem;
+            color: #f84747;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #car {
+            position: absolute;
+            bottom: 20px;
+            left: -200px;
+            transition: left 3s ease;
+        }
+        #startBtn {
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            background-color: #f84747;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div id="countdown"></div>
+<img id="car" src="aston martin Background Removed (1).png" alt="Car" width="400" />
+<button id="startBtn">Start the Race</button>
+<div id="message" style="display:none;">happy birthday pookie!</div>
+
+<!-- Confetti script -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<script>
+    const countdownEl = document.getElementById("countdown");
+    const messageEl = document.getElementById("message");
+    const carEl = document.getElementById("car");
+    const startBtn = document.getElementById("startBtn");
+
+    let countdown = 3;
+
+    startBtn.addEventListener("click", function() {
+        startBtn.style.display = "none";  // Hide button after click
+        let countdownInterval = setInterval(() => {
+            countdownEl.textContent = countdown;
+            countdown--;
+
+            if (countdown < 0) {
+                clearInterval(countdownInterval);
+                countdownEl.textContent = "";
+                startRace();
+            }
+        }, 1000);
+    });
+
+    function startRace() {
+        carEl.style.left = "calc(100% - 400px)";  // Move car to the right
+
+        setTimeout(() => {
+            showConfetti();
+            messageEl.style.display = "block";  // Show the birthday message
+        }, 3000);  // Show confetti and message after car finishes moving
+    }
+
+    function showConfetti() {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
+    }
+</script>
+
+</body>
+</html>
